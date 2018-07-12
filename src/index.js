@@ -1,12 +1,13 @@
 import http from 'http';
 
+import config from './config';
 import app from './server';
-
-const port = process.env.PORT || 3000;
 
 const server = http.createServer(app);
 
 let currentApp = app;
+
+const port = config.port;
 
 app.listen(port, () => {
 	console.log(`Server listening on port ${port}`);

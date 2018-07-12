@@ -10,3 +10,7 @@ node_modules/
 
 # Webpack dist
 dist/
+
+# .env
+.env.development
+.env.test

@@ -3,7 +3,7 @@ import express from 'express';
 import connect from './db';
 import setupMiddleware from './middleware';
 
-import { restRouter } from './api/index';
+import { restRouter } from './api';
 import { signin, protect } from './api/modules/auth';
 
 connect();

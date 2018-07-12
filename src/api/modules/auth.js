@@ -1,9 +1,11 @@
 import jwt from 'jsonwebtoken';
 import expressJwt from 'express-jwt';
 
+import config from '../../config';
+
 import { User } from '../resources/user/user.model';
 
-const jwtSecret = 'helloThereSecret';
+const jwtSecret = config.secrets.JWT_SECRET;
 const checkToken = expressJwt({ secret: jwtSecret });
 const disableAuth = false;
 
@@ -68,6 +70,8 @@ export const verifyUser = () => (req, res, next) => {
 };
 
 export const signToken = id =>
-	jwt.sign({ id }, jwtSecret, { expiresIn: '30d' });
+	jwt.sign({ id }, jwtSecret, {
+		expiresIn: config.expireTime,
+	});
 
 export const protect = [decodeToken(), getFreshUser()];
