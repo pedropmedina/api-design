@@ -1,29 +1,32 @@
+import { merge } from 'lodash';
+
 const testData = { message: 'testing data' };
 
 const controllers = {
-	createOne(model) {
-		return Promise.resolve(testData);
+	createOne(model, body) {
+		return model.create(body);
 	},
 	updateOne(docToUpdate, update) {
-		return Promise.resolve(testData);
+		merge(docToUpdate, update);
+		return docToUpdate.save();
 	},
 	deleteOne(docToDelete) {
-		return Promise.resolve(testData);
+		return docToDelete.remove();
 	},
 	getOne(docToGet) {
-		return Promise.resolve(testData);
+		return Promise.resolve(docToGet);
 	},
 	getAll(model) {
-		return Promise.resolve(testData);
+		return model.find({}).exec();
 	},
 	findByParam(model, id) {
-		return Promise.resolve(testData);
+		return model.findById(id).exec();
 	},
 };
 
 const createOne = model => (req, res, next) => {
 	return controllers
-		.createOne(model)
+		.createOne(model, req.body)
 		.then(doc => res.status(201).json(doc))
 		.catch(error => next(error));
 };
