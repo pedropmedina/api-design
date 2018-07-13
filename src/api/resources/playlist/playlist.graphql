@@ -1,0 +1,15 @@
+# Playlist is  GraphQL Object Type
+type Playlist {
+	# Below are the fields for the Playlist type
+	id: ID!
+	title: String!
+	songs: [Song]
+	favorite: Boolean!
+}
+
+input UpdatedPlaylist {
+	id: ID!
+	title: String
+	songs: [NewSong]
+	favorite: Boolean
+}

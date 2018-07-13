@@ -10,7 +10,8 @@ const nodeExternals = require('webpack-node-externals');
 const StartServerPlugin = require('start-server-webpack-plugin');
 
 // require variables based on environments
-const env = process.env.NODE_ENV || 'development';
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV;
 
 if (env === 'development') {
 	require('dotenv').config({ path: '.env.development' });
@@ -52,11 +53,17 @@ module.exports = {
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.DefinePlugin({
 			'process.env': { BUILD_TARGET: JSON.stringify('server') },
-			'process.env.PORT': JSON.stringify(process.env.PORT),
-			'process.env.MONGODB_URI': JSON.stringify(process.env.MONGODB_URI),
-			'process.env.JWT_SECRET': JSON.stringify(process.env.JWT_SECRET),
-			'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+			// 'process.env.PORT': JSON.stringify(process.env.PORT),
+			// 'process.env.MONGODB_URI': JSON.stringify(process.env.MONGODB_URI),
+			// 'process.env.JWT_SECRET': JSON.stringify(process.env.JWT_SECRET),
+			// 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
 		}),
+		new webpack.EnvironmentPlugin([
+			'NODE_ENV',
+			'JWT_SECRET',
+			'MONGODB_URI',
+			'PORT',
+		]),
 		new webpack.BannerPlugin({
 			banner: 'require("source-map-support").install();',
 			raw: true,
