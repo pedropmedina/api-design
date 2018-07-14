@@ -3,8 +3,8 @@ import { graphqlExpress } from 'apollo-server-express';
 import { merge } from 'lodash';
 
 import { userType, userResolvers, userRouter } from './resources/user';
-import { songType } from './resources/song';
-import { playlistType } from './resources/playlist';
+import { songType, songResolvers } from './resources/song';
+import { playlistType, playlistResolvers } from './resources/playlist';
 
 const baseSchema = `
 	schema {
@@ -12,11 +12,10 @@ const baseSchema = `
 	}
 `;
 
+// Stitch schemas
 const schema = makeExecutableSchema({
-	// all the graphql files
 	typeDefs: [baseSchema, userType, songType, playlistType],
-	// all the resolvers
-	resolvers: merge({}, userResolvers),
+	resolvers: merge({}, userResolvers, songResolvers, playlistResolvers),
 });
 
 export const graphQLRouter = graphqlExpress(req => ({

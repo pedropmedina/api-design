@@ -1,5 +1,6 @@
 type User {
 	id: ID!
+	friends: [String]!
 	username: String!
 	cratedAt: String!
 	updatedAt: String!
@@ -10,5 +11,5 @@ input UpdateUser {
 }
 
 type Query {
-	getMe: User
+	getMe: User!
 }

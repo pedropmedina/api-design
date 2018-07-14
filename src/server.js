@@ -1,5 +1,6 @@
 import express from 'express';
-import { graphiqlExpress } from 'apollo-server-express';
+// import { graphiqlExpress } from 'apollo-server-express';
+import expressPlayground from 'graphql-playground-middleware-express';
 
 import connect from './db';
 import setupMiddleware from './middleware';
@@ -19,10 +20,10 @@ app.use('/api', restRouter);
 
 // GraphQL
 app.use('/graphql', graphQLRouter);
-app.use('/docs', graphiqlExpress({ endpointURL: '/graphql' }));
+app.use('/docs', expressPlayground({ endpoint: '/graphql' }));
 
-app.all('*', (req, res) => {
-	res.json({ ok: true });
-});
+// app.all('*', (req, res) => {
+// 	res.json({ ok: true });
+// });
 
 export default app;

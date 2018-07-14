@@ -8,7 +8,7 @@ const schema = {
 	songs: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'song',
+			ref: 'Song',
 		},
 	],
 	favorite: {

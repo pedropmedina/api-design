@@ -26,3 +26,11 @@ input NewSong {
 	rating: Int
 	favorite: Boolean
 }
+
+# There can only be one Type of each, since we already define
+# Query in users we have to extend this type with
+# keyword extend
+extend type Query {
+	getSong(id: ID!): Song!
+	allSongs: [Song]!
+}
