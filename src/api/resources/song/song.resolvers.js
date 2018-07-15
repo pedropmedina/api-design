@@ -1,3 +1,5 @@
+import { merge } from 'lodash';
+
 import { Song } from './song.model';
 
 const getSong = async (root, { id }) => {
@@ -14,9 +16,33 @@ const allSongs = () => {
 	return Song.find({}).exec();
 };
 
+const createSong = async (root, { input }, context, info) => {
+	const song = await Song.create(input);
+	return song;
+};
+
+const updateSong = async (root, { input }, context, info) => {
+	const updatedSong = await Song.findByIdAndUpdate(
+		input.id,
+		{ $set: input },
+		{ new: true },
+	);
+	return updatedSong;
+};
+
+const deleteSong = async (root, { id }, context, info) => {
+	const song = await Song.findByIdAndRemove(id);
+	return song;
+};
+
 export const songResolvers = {
 	Query: {
 		getSong,
 		allSongs,
+	},
+	Mutation: {
+		createSong,
+		updateSong,
+		deleteSong,
 	},
 };

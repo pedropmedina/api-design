@@ -8,19 +8,19 @@ type Song {
 	favorite: Boolean!
 }
 
-input UpdatedSong {
-	id: ID!
-	title: String
-	url: String
+input NewSong {
+	title: String!
+	url: String!
 	album: String
 	artist: String
 	rating: Int
 	favorite: Boolean
 }
 
-input NewSong {
-	title: String!
-	url: String!
+input UpdatedSong {
+	id: ID!
+	title: String
+	url: String
 	album: String
 	artist: String
 	rating: Int
@@ -33,4 +33,10 @@ input NewSong {
 extend type Query {
 	getSong(id: ID!): Song!
 	allSongs: [Song]!
+}
+
+extend type Mutation {
+	createSong(input: NewSong): Song!
+	updateSong(input: UpdatedSong): Song!
+	deleteSong(id: ID!): Song!
 }

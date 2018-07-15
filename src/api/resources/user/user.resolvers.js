@@ -14,6 +14,11 @@ const getMe = (rootValue, args, { user }, info) => ({
 	updatedAt: 'kjafkjlha',
 });
 
+const updateMe = (root, { input }, { user }, info) => {
+	merge(user, input);
+	return user.save();
+};
+
 export const userResolvers = {
 	Query: {
 		getMe,
@@ -25,5 +30,8 @@ export const userResolvers = {
 		friends: root => {
 			return ['Bianca', 'Luca'];
 		},
+	},
+	Mutation: {
+		updateMe,
 	},
 };

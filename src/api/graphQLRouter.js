@@ -14,7 +14,7 @@ const baseSchema = `
 
 // Stitch schemas
 const schema = makeExecutableSchema({
-	typeDefs: [baseSchema, userType, songType, playlistType],
+	typeDefs: [userType, songType, playlistType],
 	resolvers: merge({}, userResolvers, songResolvers, playlistResolvers),
 });
 

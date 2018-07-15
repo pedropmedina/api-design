@@ -6,10 +6,14 @@ type User {
 	updatedAt: String!
 }
 
-input UpdateUser {
+input UpdatedUser {
 	username: String!
 }
 
 type Query {
 	getMe: User!
+}
+
+type Mutation {
+	updateMe(input: UpdatedUser): User!
 }

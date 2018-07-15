@@ -23,7 +23,7 @@ module.exports = {
 	entry: ['webpack/hot/poll?1000', './src/index'],
 	watch: true,
 	mode: 'development',
-	devtool: 'sourcemap',
+	devtool: 'eval-source-map',
 	target: 'node',
 	node: {
 		__filename: true,
