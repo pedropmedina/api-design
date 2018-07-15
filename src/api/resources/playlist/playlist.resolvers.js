@@ -34,13 +34,11 @@ const createPlaylist = async (root, { input }, context, info) => {
 };
 
 // update playlist
-// TODO: This isn't adding to songs's array and it's not savind to db
 const updatePlaylist = async (root, { input }, context, info) => {
 	const playlist = await Playlist.findById(input.id);
-	console.log('# 1 ', playlist);
-	merge(playlist, input);
-	console.log('# 2 ', playlist);
-	return await playlist.save();
+	playlist.songs = [...playlist.songs, ...input.songs];
+	await playlist.save();
+	return playlist;
 };
 
 // delte playlist
