@@ -19,13 +19,9 @@ const getPlaylist = async (root, { id }) => {
 };
 
 // populate songs in playlist
-const songsInPlaylist = async (root, args, context, info) => {
-	const listOfsongs = await Playlist.findById(root.id)
-		.populate('songs')
-		.select('songs')
-		.exec();
-
-	return listOfsongs.songs;
+const songsArray = async (playlist, args, context, info) => {
+	const populated = await playlist.populate('songs').execPopulate();
+	return populated.songs;
 };
 
 // create new playlist
@@ -34,16 +30,15 @@ const createPlaylist = async (root, { input }, context, info) => {
 };
 
 // update playlist
+// TODO: Handle updates for songs array
 const updatePlaylist = async (root, { input }, context, info) => {
-	const playlist = await Playlist.findById(input.id);
-	playlist.songs = [...playlist.songs, ...input.songs];
-	await playlist.save();
-	return playlist;
+	const { id, ...update } = input;
+	return Playlist.findByIdAndUpdate(id, { $set: update }, { new: true }).exec();
 };
 
 // delte playlist
 const deletePlaylist = async (root, { id }, context, info) => {
-	return await Playlist.findByIdAndRemove(id);
+	return await Playlist.findByIdAndRemove(id).exec();
 };
 
 export const playlistResolvers = {
@@ -58,6 +53,6 @@ export const playlistResolvers = {
 	},
 	// Below is an example on how to implement a nested resolver
 	Playlist: {
-		songs: songsInPlaylist,
+		songs: songsArray,
 	},
 };

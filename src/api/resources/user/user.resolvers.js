@@ -19,19 +19,26 @@ const updateMe = (root, { input }, { user }, info) => {
 	return user.save();
 };
 
+const playlistsArray = async (root, args, context, info) => {
+	const playlists = await User.findById(root.id)
+		.populate('playlists')
+		.select('playlists')
+		.exec();
+
+	console.log(playlists);
+	return playlists;
+};
+
 export const userResolvers = {
 	Query: {
 		getMe,
 	},
-	// Below is an example using nested resolvers.
-	// Nested resolvers are resolvers at the object type field
-	// not at the root field
-	User: {
-		friends: root => {
-			return ['Bianca', 'Luca'];
-		},
-	},
 	Mutation: {
 		updateMe,
 	},
+	User: {
+		playlists: playlistsArray,
+	},
 };
+
+// authentication should be at the resolver's level

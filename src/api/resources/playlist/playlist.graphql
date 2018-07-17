@@ -8,14 +8,14 @@ type Playlist {
 
 input NewPlaylist {
 	title: String!
-	songs: [ID]
+	songs: [ID!]
 	favorite: Boolean
 }
 
 input UpdatedPlaylist {
 	id: ID!
 	title: String
-	songs: [ID]
+	songs: [ID!]
 	favorite: Boolean
 }
 

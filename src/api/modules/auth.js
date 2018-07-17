@@ -19,6 +19,10 @@ export const decodeToken = () => (req, res, next) => {
 		return next();
 	}
 
+	// This checks for tokens in the query string
+	// If found, it will place it in the req.headers
+	// to make it available for checkToken function
+	// which checks the req.headers for tokens to authorize user
 	if (req.query && req.query.hasOwnProperty('access_token')) {
 		req.headers.authorization = `Bearer ${req.query.access_token}`;
 	}
@@ -50,7 +54,7 @@ export const verifyUser = () => (req, res, next) => {
 	const { username, password } = req.body;
 
 	if (!username || !password) {
-		res.status(400).send('You need a username and password');
+		return res.status(400).send('You need a username and password');
 	}
 
 	User.findOne({ username: username })

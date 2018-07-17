@@ -22,17 +22,16 @@ const createSong = async (root, { input }, context, info) => {
 };
 
 const updateSong = async (root, { input }, context, info) => {
-	const updatedSong = await Song.findByIdAndUpdate(
+	const { id, ...update } = input;
+	return await Song.findByIdAndUpdate(
 		input.id,
-		{ $set: input },
+		{ $set: update },
 		{ new: true },
-	);
-	return updatedSong;
+	).exec();
 };
 
 const deleteSong = async (root, { id }, context, info) => {
-	const song = await Song.findByIdAndRemove(id);
-	return song;
+	return await Song.findByIdAndRemove(id);
 };
 
 export const songResolvers = {

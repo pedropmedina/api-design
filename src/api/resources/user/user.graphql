@@ -1,7 +1,7 @@
 type User {
 	id: ID!
-	friends: [String]!
 	username: String!
+	playlists: [Playlist]!
 	cratedAt: String!
 	updatedAt: String!
 }
